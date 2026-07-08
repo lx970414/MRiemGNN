@@ -31,11 +31,10 @@ This repository contains a PyTorch implementation of MRiemGNN for multiplex hete
 |   |-- prepare_sr_rsc.py      # SR-RSC IMDB converter
 |   `-- ensemble_logits.py     # saved-logit diagnostic ensembling
 |-- scripts/                   # PowerShell helpers for dataset prep and final runs
-|-- DATASETS.md                # dataset acquisition/conversion notes
-`-- EXPERIMENTS.md             # local experiment log and best commands
+`-- README.md                  # usage, dataset preparation, and best commands
 ```
 
-Large local artifacts such as `data/`, `external/`, and `runs/` are intentionally ignored by Git. See `DATASETS.md` to rebuild the required datasets.
+Large local artifacts such as `data/`, `external/`, and `runs/` are intentionally ignored by Git. Rebuild datasets from the public upstream sources and conversion commands below.
 
 ## Installation
 
@@ -58,7 +57,7 @@ For the most common reproduction commands, use the PowerShell helpers in `script
 .\scripts\run_best_nodecls.ps1 -Dataset mag
 ```
 
-See `scripts/README.md` for the available dataset names.
+Available names for `run_best_nodecls.ps1` are `taobao`, `mag`, `imdb`, and `alibaba`.
 
 Node classification on a prepared `.mat` dataset:
 
@@ -89,7 +88,7 @@ The current workflow merges the validation split into training where applicable 
 | IMDB | 0.7826 | 0.7757 | 0.7657 | 0.8428 | Macro exceeds, Micro below |
 | Alibaba | 0.5345 | 0.5882 | 0.5151 | 0.6402 | Macro exceeds, Micro below |
 
-See `EXPERIMENTS.md` for the full sweep history, negative results, and diagnostic notes.
+The commands below are the tuned local reproduction settings for the current node-classification results.
 
 ## Reproducing Best Commands
 
@@ -148,7 +147,7 @@ python main.py `
 
 ### IMDB
 
-Prepare SR-RSC IMDB as described in `DATASETS.md`, then run:
+Download the SR-RSC IMDB data from `RuixZh/SR-RSC`, convert it with `tools\prepare_sr_rsc.py`, then run:
 
 ```powershell
 python main.py `
@@ -168,7 +167,7 @@ python main.py `
 
 ### Alibaba
 
-Prepare BPHGNN `alibaba_small` as described in `DATASETS.md`, then run:
+Download BPHGNN `alibaba_small`, place it under `external\BPHGNN\data\alibaba_small`, then run:
 
 ```powershell
 python main.py `
@@ -204,8 +203,3 @@ Composite relation relabeling is enabled by default to match relation-combinatio
 ## License
 
 This project is released under the MIT License. See `LICENSE` for details.
-
-## Notes
-
-- `DATASETS.md` documents checked upstream dataset sources and conversion commands.
-- `EXPERIMENTS.md` records best settings, failed sweeps, and error analysis.
